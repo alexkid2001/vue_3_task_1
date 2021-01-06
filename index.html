@@ -23,22 +23,26 @@
                 active: activeIndex === idx,
                 done: activeIndex > idx
               }"
-              v-for="(step, idx) in maxIndex + 1"
+              v-for="(step, idx) in steps"
               @click="setActive(idx)"
           >
-            <span>{{ step }}</span> {{ steps[idx].title }}
+            <span>{{ idx + 1 }}</span> {{ step.title }}
           </li>
         </ul>
-        <div>
+        <div v-if="!isFinishStep">
           <button class="btn"
                   @click="prev"
                   :disabled="!isPrevEnabled"
                   ref="prevBtn">Назад</button>
           <button class="btn primary"
                   @click="nextOfFinish"
-                  ref="nextBtn"
                   v-show="!isFinishStep"
-          >Вперед</button>
+          >{{ !isLastStep ? 'Вперед' : 'Закончить' }}</button>
+        </div>
+        <div v-else>
+          <button class="btn"
+                  @click="reset"
+          >Начать заново</button>
         </div>
       </div>
     </div>

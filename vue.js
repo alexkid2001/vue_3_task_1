@@ -13,12 +13,7 @@ const App = {
         {title: 'Vuex', text: 'В блоке вы узнаете абсолютно все про Vuex. Вы узнаете как работать с данными, какие есть лучшие практики по их программированию и структурированию. Все на практике.'},
         {title: 'Composition', text: 'Одним из наиболее важных обновлений в Vue 3 является появление альтернативного синтаксиса Composition API. В этом блоке вы узнаете все, чтобы полностью пользоваться данными синтаксисом на практических примерах. Помимо этого вы узнаете как работать совместно с Vue Router и Vuex.'},
       ],
-      maxIndex: 4,
-      isFinishStep: false,
-      finishText: 'Закончить',
-      restartText: 'Начать заного',
-      prevText: 'Назад',
-      nextText: 'Вперед'
+      isFinishStep: false
     }
   },
   methods: {
@@ -28,45 +23,25 @@ const App = {
         return
       }
       this.activeIndex = this.activeIndex ? this.activeIndex - 1 : 0
-      this.changeBtnTitle()
     },
     reset() {
       this.isFinishStep = false
       this.activeIndex = 0
-      this.changeBtnTitle()
     },
     nextOfFinish() {
       if (this.isLastStep) {
         this.isFinishStep = true
-        this.changeBtnTitle()
         return
       }
       if (!this.isLastStep) {
         this.activeIndex++;
       }
-      if (this.isLastStep) {
-        this.$refs.nextBtn.innerText = this.finishText
-      }
-      this.changeBtnTitle()
     },
     setActive(idx) {
       if (this.isFinishStep) {
         return
       }
       this.activeIndex = idx
-      this.changeBtnTitle()
-    },
-    changeBtnTitle () {
-      if (this.isLastStep) {
-        this.$refs.nextBtn.innerText = this.finishText
-      } else {
-        this.$refs.nextBtn.innerText = this.nextText
-      }
-      if (this.isFinishStep) {
-        this.$refs.prevBtn.innerText = this.restartText
-      } else {
-        this.$refs.prevBtn.innerText = this.prevText
-      }
     }
   },
   computed: {
@@ -74,7 +49,7 @@ const App = {
       return this.activeIndex > 0
     },
     isLastStep () {
-      return this.activeIndex === this.maxIndex
+      return this.activeIndex + 1 === this.steps.length
     },
   }
 }
